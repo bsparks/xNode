@@ -150,7 +150,9 @@ namespace XNodeEditor {
         }
 
         public Vector2 GridToWindowPosition(Vector2 gridPosition) {
-            return (position.size * 0.4925f) + (panOffset / zoom) + (gridPosition / zoom);
+            float x = (position.size.x * 0.5f) + (panOffset.x / zoom) + (gridPosition.x / zoom);
+            float y = (position.size.y * 0.4925f) + (panOffset.y / zoom) + (gridPosition.y / zoom);
+            return new Vector2(x, y);
         }
 
         public Rect GridToWindowRectNoClipped(Rect gridRect) {
