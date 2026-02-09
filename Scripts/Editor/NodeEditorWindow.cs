@@ -4,10 +4,11 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using System;
 using Object = UnityEngine.Object;
+using UnityEditor.Overlays;
 
 namespace XNodeEditor {
     [InitializeOnLoad]
-    public partial class NodeEditorWindow : EditorWindow {
+    public partial class NodeEditorWindow : EditorWindow, ISupportsOverlays {
         public static NodeEditorWindow current;
 
         /// <summary> Stores node positions for all nodePorts. </summary>
@@ -81,10 +82,10 @@ namespace XNodeEditor {
                 graphEditor.OnWindowFocus();
                 if (NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
             }
-            
+
             dragThreshold = Math.Max(1f, Screen.width / 1000f);
         }
-        
+
         void OnLostFocus() {
             if (graphEditor != null) graphEditor.OnWindowFocusLost();
         }
@@ -149,7 +150,7 @@ namespace XNodeEditor {
         }
 
         public Vector2 GridToWindowPosition(Vector2 gridPosition) {
-            return (position.size * 0.5f) + (panOffset / zoom) + (gridPosition / zoom);
+            return (position.size * 0.4925f) + (panOffset / zoom) + (gridPosition / zoom);
         }
 
         public Rect GridToWindowRectNoClipped(Rect gridRect) {

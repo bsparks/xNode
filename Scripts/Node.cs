@@ -118,6 +118,9 @@ namespace XNode {
         /// <summary> Used during node instantiation to fix null/misconfigured graph during OnEnable/Init. Set it before instantiating a node. Will automatically be unset during OnEnable </summary>
         public static NodeGraph graphHotfix;
 
+        // BS: added from RCK
+        public string guidStr = Guid.NewGuid().ToString();
+
         protected void OnEnable() {
             if (graphHotfix != null) graph = graphHotfix;
             graphHotfix = null;
@@ -406,7 +409,7 @@ namespace XNode {
 
             public void OnAfterDeserialize() {
                 this.Clear();
-#if UNITY_2021_3_OR_NEWER                
+#if UNITY_2021_3_OR_NEWER
                 this.EnsureCapacity(keys.Count);
 #endif
 
