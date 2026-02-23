@@ -66,6 +66,13 @@ namespace XNodeEditor {
             return output.CanConnectTo(input);
         }
 
+        public virtual void CreateContextMenu(Vector2 pos, Type compatibleType = null)
+        {
+            GenericMenu menu = new GenericMenu();
+            AddContextMenuItems(menu, compatibleType);
+            menu.DropDown(new Rect(pos, Vector2.zero));
+        }
+
         /// <summary>
         /// Add items for the context menu when right-clicking this node.
         /// Override to add custom menu items.
@@ -210,13 +217,16 @@ namespace XNodeEditor {
         }
 
         /// <summary> Create a node and save it in the graph asset </summary>
-        public virtual XNode.Node CreateNode(Type type, Vector2 position) {
+        public virtual XNode.Node CreateNode(Type type, Vector2 position, string nodeName = null) {
             Undo.RecordObject(target, "Create Node");
             XNode.Node node = target.AddNode(type);
             if (node == null) return null; // handle null nodes to avoid nullref exceptions
             Undo.RegisterCreatedObjectUndo(node, "Create Node");
             node.position = position;
-            if (node.name == null || node.name.Trim() == "") node.name = NodeEditorUtilities.NodeDefaultName(type);
+            if (!string.IsNullOrEmpty(nodeName)) node.name = nodeName;
+            if (node.name == null || node.name.Trim() == ""){
+                node.name = NodeEditorUtilities.NodeDefaultName(type);
+            }
             if (!string.IsNullOrEmpty(AssetDatabase.GetAssetPath(target))) AssetDatabase.AddObjectToAsset(node, target);
             if (NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
             NodeEditorWindow.RepaintAll();

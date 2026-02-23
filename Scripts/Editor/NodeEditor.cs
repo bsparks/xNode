@@ -119,12 +119,21 @@ namespace XNodeEditor {
             else return NodeEditorPreferences.GetSettings().tintColor;
         }
 
+        public virtual Color GetHighlightTint()
+        {
+            return NodeEditorPreferences.GetSettings().highlightColor;
+        }
+
         public virtual GUIStyle GetBodyStyle() {
             return NodeEditorResources.styles.nodeBody;
         }
 
         public virtual GUIStyle GetBodyHighlightStyle() {
             return NodeEditorResources.styles.nodeHighlight;
+        }
+
+        public virtual bool ShouldHighlight() {
+            return false;
         }
 
         /// <summary> Override to display custom node header tooltips </summary>

@@ -151,7 +151,7 @@ namespace XNodeEditor {
 
         public Vector2 GridToWindowPosition(Vector2 gridPosition) {
             float x = (position.size.x * 0.5f) + (panOffset.x / zoom) + (gridPosition.x / zoom);
-            float y = (position.size.y * 0.4925f) + (panOffset.y / zoom) + (gridPosition.y / zoom);
+            float y = (position.size.y * 0.5f) + (panOffset.y / zoom) + (gridPosition.y / zoom);
             return new Vector2(x, y);
         }
 
@@ -190,7 +190,7 @@ namespace XNodeEditor {
 
         [OnOpenAsset(0)]
         public static bool OnOpen(int instanceID, int line) {
-            XNode.NodeGraph nodeGraph = EditorUtility.InstanceIDToObject(instanceID) as XNode.NodeGraph;
+            XNode.NodeGraph nodeGraph = EditorUtility.EntityIdToObject(instanceID) as XNode.NodeGraph;
             if (nodeGraph != null) {
                 Open(nodeGraph);
                 return true;
